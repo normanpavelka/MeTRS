@@ -17,5 +17,5 @@ _Resources:_
 _Pipeline overview:_
 1) Extract FASTA headers from SILVA reference sequence file and run 'SILVA_taxonomy_parse.R' on them to generate the taxonomy file
 2) Generate bowtie index library from SILVA reference sequence library
-3) Place all sample FASTQ files (and ONLY those) in one directory
+3) Place all sample FASTQ files (and *only* those) in one directory
 4) Run 'ConTxT.sh' on files generated in previous 3 steps
