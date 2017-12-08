@@ -55,7 +55,8 @@ names(myTaxRanks) <- c("D", "K", "P", "C", "O", "F", "G", "S")
 parsedTaxonomy <- parsedTaxonomy[, c("OTUid", myTaxRanks)]
 
 outputFileName2 <- sub("\\.txt", "_8-levels.txt", inputFileName)
-write.csv(parsedTaxonomy, file=outputFileName2)
+write.table(parsedTaxonomy, file=outputFileName2, quote=FALSE, sep="\t",
+  row.names=FALSE)
 
 ###
 
@@ -85,13 +86,17 @@ reannotatedTaxonomy <- cbind(reannotatedTaxonomy,
 reannotatedTaxonomy[, "species"] <- sub("(^S__[A-Z][a-z]+_[a-z]+)(\\.?)(.*$)",
   "\\1\\2", reannotatedTaxonomy[, "strain"])
 
-# collapse taxonomic terms back into single string
-reannotatedTaxonomy <- t(apply(reannotatedTaxonomy, 1, function(otu) {
+outputFileName3 <- sub("\\.txt", "_9-levels_reannotated.txt", inputFileName)
+write.table(reannotatedTaxonomy, file=outputFileName3, quote=FALSE,
+  row.names=FALSE, col.names=FALSE)
+
+# collapse taxonomic terms back into a single string
+collapsedTaxonomy <- t(apply(reannotatedTaxonomy, 1, function(otu) {
   c(otu[1], paste(otu[2:length(otu)], collapse=";"))
 }))
 
-outputFileName2 <- sub("\\.txt", "_9-levels_reannotated.txt", inputFileName)
-write.table(reannotatedTaxonomy, file=outputFileName2, quote=FALSE, sep="\t",
+outputFileName4 <- sub("\\.txt", "_collapsed.txt", outputFileName3)
+write.table(collapsedTaxonomy, file=outputFileName4, quote=FALSE,
   row.names=FALSE, col.names=FALSE)
 
                             ### SCRIPT END ###
